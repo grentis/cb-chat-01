@@ -55,11 +55,18 @@ export default class WSServer {
                         
                         this.send_message_to_all(con.room, {
                             type: "CONNECTION",
-                            message: `connected`,
+                            message: `${message.username} connected`,
                             author_name: message.username,
                             author_uid: con.uid,
                             created_at: new Date()
-                        });
+                        }, false);
+                        this.send_message_to_all(con.room, {
+                            type: "MSG",
+                            message: `${message.username} connected`,
+                            author_name: message.username,
+                            author_uid: con.uid,
+                            created_at: new Date()
+                        }, true);
                     } else {
                         if (!con.authorized) return;
                         console.debug(`Client ${con.user.name} has sent: ${data}`)
@@ -70,21 +77,29 @@ export default class WSServer {
                                 author_name: con.user.name,
                                 author_uid: con.uid,
                                 created_at: new Date()
-                            });
+                            }, true);
                         }
                     }
                 }
             });
             
             con.on("close", () => {
-                console.debug(`Client ${con.user.name} disconnected`)
+                if (!con.user) return;
+                console.debug(`Clients ${con.user.name} disconnected`)
                 this.send_message_to_all(con.room, {
                     type: "DISCONNECTION",
-                    message: "disconnected",
+                    message: `${con.user.name} disconnected`,
                     author_name: con.user.name,
                     author_uid: con.uid,
                     created_at: new Date()
-                });
+                }, false);
+                this.send_message_to_all(con.room, {
+                    type: "MSG",
+                    message: `${con.user.name} disconnected`,
+                    author_name: con.user.name,
+                    author_uid: con.uid,
+                    created_at: new Date()
+                }, true);
             });
             
             con.onerror = function () {
@@ -95,10 +110,11 @@ export default class WSServer {
         return _wss;
     }
     
-    private send_message_to_all(room: string, message: WSMessage):void {
+    private send_message_to_all(room: string, message: WSMessage, store: boolean):void {
         const current_room = this.rooms.filter((r) => { return r.name === room });
         if (!current_room.length) return;
-        current_room[0].messages.push(message);
+        if (store)
+            current_room[0].messages.push(message);
         this.wss.clients.forEach((client: WebSocket.WebSocket) => {
             if ((client as ExtWebSocket).authorized && client.readyState === WebSocket.OPEN && (client as ExtWebSocket).room === room) {
                 console.debug(`Sending message to ${(client as ExtWebSocket).user.name}`)
