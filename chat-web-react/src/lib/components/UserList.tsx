@@ -15,7 +15,8 @@ export interface WSMessage {
 }
 
 interface UserListPros {
-  users: WSUser[]
+  users: WSUser[],
+  uid?: string
 }
 
 class UserList extends React.Component<UserListPros> {
@@ -25,7 +26,7 @@ class UserList extends React.Component<UserListPros> {
         <UiUserlist>
         { 
             this.props.users.map((user) => {
-                return <UiUseritem key={user.id} user_name={user.name}></UiUseritem>;
+                return <UiUseritem highlight={user.id === this.props.uid} key={user.id} user_name={user.name}></UiUseritem>;
             })
         }
         </UiUserlist>

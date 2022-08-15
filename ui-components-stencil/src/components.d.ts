@@ -26,6 +26,7 @@ export namespace Components {
     }
     interface UiMessageitem {
         "date": Date;
+        "highlight"?: boolean;
         "key": string;
         "message": string;
         "user_name": string;
@@ -39,6 +40,7 @@ export namespace Components {
     interface UiRow {
     }
     interface UiUseritem {
+        "highlight"?: boolean;
         "key": string;
         "user_name": string;
     }
@@ -140,6 +142,7 @@ declare namespace LocalJSX {
     }
     interface UiMessageitem {
         "date"?: Date;
+        "highlight"?: boolean;
         "key"?: string;
         "message"?: string;
         "user_name"?: string;
@@ -153,6 +156,7 @@ declare namespace LocalJSX {
     interface UiRow {
     }
     interface UiUseritem {
+        "highlight"?: boolean;
         "key"?: string;
         "user_name"?: string;
     }

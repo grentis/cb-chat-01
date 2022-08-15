@@ -4,7 +4,8 @@ import { WSMessage } from './UserList';
 import { UiMessagelist, UiMessageitem } from 'ui-components-react';
 
 interface MessageListPros {
-  messages: WSMessage[]
+  messages: WSMessage[],
+  uid?: string
 }
 
 class MessageList extends React.Component<MessageListPros> {
@@ -14,7 +15,7 @@ class MessageList extends React.Component<MessageListPros> {
         <UiMessagelist>
         { 
             this.props.messages.map((msg) => {
-                return <UiMessageitem key={msg.author_uid + '_' + msg.created_at} date={msg.created_at} user_name={msg.author_name} message={msg.message}></UiMessageitem>;
+                return <UiMessageitem highlight={msg.author_uid === this.props.uid} key={msg.author_uid + '_' + msg.created_at} date={msg.created_at} user_name={msg.author_name} message={msg.message}></UiMessageitem>;
             })
         }
         </UiMessagelist>

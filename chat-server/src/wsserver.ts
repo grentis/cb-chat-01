@@ -146,7 +146,8 @@ export default class WSServer {
             console.debug(`Sending message to ${client.user.name}`)
             client.send(JSON.stringify({
                 type: "USERS",
-                users: current_clients
+                users: current_clients,
+                uid: client.uid
             }));
         }
     }

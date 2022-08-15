@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property    | Attribute   | Description | Type     | Default     |
-| ----------- | ----------- | ----------- | -------- | ----------- |
-| `key`       | `key`       |             | `string` | `undefined` |
-| `user_name` | `user_name` |             | `string` | `undefined` |
+| Property    | Attribute   | Description | Type      | Default     |
+| ----------- | ----------- | ----------- | --------- | ----------- |
+| `highlight` | `highlight` |             | `boolean` | `undefined` |
+| `key`       | `key`       |             | `string`  | `undefined` |
+| `user_name` | `user_name` |             | `string`  | `undefined` |
 
 
 ----------------------------------------------

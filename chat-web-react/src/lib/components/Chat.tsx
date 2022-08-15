@@ -14,7 +14,8 @@ interface ChatState {
   users: WSUser[],
   messages: WSMessage[],
   new_message: string,
-  connected: boolean
+  connected: boolean,
+  uid: string
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
@@ -28,7 +29,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
       users: [],
       messages: [],
       new_message: '',
-      connected: false
+      connected: false,
+      uid: ''
     };
     this.send_message = this.send_message.bind(this);
   }
@@ -54,7 +56,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
       const message = JSON.parse(data.data);
       if (message.type === 'USERS') {
         this.setState({
-          users: message.users
+          users: message.users,
+          uid: message.uid
         });
       } else if(message.type === 'CONNECTION') {
         const current_users = this.state.users;
@@ -118,7 +121,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
         )}
 
         <UiPanel panel_title={'#' + this.props.room_name} size="1">
-          <UserList users={this.state.users}></UserList>
+          <UserList uid={this.state.uid} users={this.state.users}></UserList>
           <UiButton name="exit" click_callback={(evt: any) => this.handle_exit(evt)}>Exit</UiButton>
         </UiPanel>
 
@@ -128,7 +131,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
               field_id="new_chat_message" placeholder="Write here your message"
               change_event={(ev:any) => this.handleChange(ev)}></UiInput>
           </form>
-          <MessageList messages={this.state.messages}></MessageList>
+          <MessageList uid={this.state.uid} messages={this.state.messages}></MessageList>
         </UiPanel>
 
       </UiRow>

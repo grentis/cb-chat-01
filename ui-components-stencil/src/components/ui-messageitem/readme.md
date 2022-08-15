@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property    | Attribute   | Description | Type     | Default     |
-| ----------- | ----------- | ----------- | -------- | ----------- |
-| `date`      | --          |             | `Date`   | `undefined` |
-| `key`       | `key`       |             | `string` | `undefined` |
-| `message`   | `message`   |             | `string` | `undefined` |
-| `user_name` | `user_name` |             | `string` | `undefined` |
+| Property    | Attribute   | Description | Type      | Default     |
+| ----------- | ----------- | ----------- | --------- | ----------- |
+| `date`      | --          |             | `Date`    | `undefined` |
+| `highlight` | `highlight` |             | `boolean` | `undefined` |
+| `key`       | `key`       |             | `string`  | `undefined` |
+| `message`   | `message`   |             | `string`  | `undefined` |
+| `user_name` | `user_name` |             | `string`  | `undefined` |
 
 
 ----------------------------------------------
