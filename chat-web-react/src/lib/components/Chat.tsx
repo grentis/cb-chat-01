@@ -83,7 +83,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
     }
     wsc.onopen = () => {
       this.setState({connected: true, messages: [], users: []});
-      wsc.send(JSON.stringify({command: "HELO", room: `${this.props.room_name}`, username: `${this.props.username}`}));  
+      wsc.send(JSON.stringify({command: "HELO", room: `${this.props.room_name.toLowerCase()}`, username: `${this.props.username}`}));  
     }
     wsc.onclose = () => {
       this.setState({connected: false});

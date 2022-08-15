@@ -38,14 +38,14 @@ export default class WSServer {
                     if (message.command === 'HELO') {
                         if (!message.username || !message.room) return;
                         console.debug(`Client ${message.username} has sent: ${data}`)
-                        let current_room = this.rooms.filter((r) => { return r.name === message.room });
+                        let current_room = this.rooms.filter((r) => { return r.get_name() === message.room });
                         if (!current_room.length) {
                             const _temp = new WSRoom(message.room);
                             this.rooms.push(_temp);
                             current_room = [_temp];
                         }
                         
-                        con.room = current_room[0].name;
+                        con.room = current_room[0].get_name();
                         con.user = new WSUser(con.uid, message.username);
                         con.authorized = true;
                         console.debug(`Client ${con.user.name} authorized`);
@@ -111,7 +111,7 @@ export default class WSServer {
     }
     
     private send_message_to_all(room: string, message: WSMessage, store: boolean):void {
-        const current_room = this.rooms.filter((r) => { return r.name === room });
+        const current_room = this.rooms.filter((r) => { return r.get_name() === room });
         if (!current_room.length) return;
         if (store)
             current_room[0].messages.push(message);
@@ -124,7 +124,7 @@ export default class WSServer {
     }
     
     private send_lastmessages_to_client(client: ExtWebSocket) {
-        const current_room = this.rooms.filter((r) => { return r.name === client.room });
+        const current_room = this.rooms.filter((r) => { return r.get_name() === client.room });
         if (!current_room.length) return;
         const last20 = current_room[0].messages.slice(-20);
         if (client.authorized && client.readyState === WebSocket.OPEN) {
