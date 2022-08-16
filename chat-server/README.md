@@ -100,6 +100,15 @@ Gli eventi di sistema verranno inviati a tutti i client connessi tramite invio d
 }
 ```
 
+### Linter
+
+In questo progetto è stato configurato un linter per mantenere regole di sviluppo coerenti in tutte le sue parti. Per eseguirlo
+```
+npm run lint
+```
+
+Anche il comando di build prevede al suo interno l'esecuzione del linter, impedendo quindi la generazione in caso di inconsistenza nel codice,
+
 #### Note
 
 Se in fase di autenticazione viene passato il nome di una stanza non esistente il server procederà a crearla e a permetterne l'utilizzo.
