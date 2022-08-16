@@ -9,9 +9,9 @@ export class UiUserList {
   
   render() {
     return (
-        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-            <slot />
-        </ul>
+      <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+        <slot />
+      </ul>
     );
   }
 }

@@ -1,6 +1,6 @@
 # cb-chat-01/chat-server
 
-Modulo node per il servizo server di chat
+Modulo Node.js per il servizo server di chat
 
 ### Installazione
 
@@ -9,7 +9,7 @@ Modulo node per il servizo server di chat
 npm install ../packages/chat-server-1.0.0.tgz
 ```
 
-2. importare il modulo all'interno della propria applicazione node  
+2. importare il modulo all'interno della propria applicazione Node.js  
 ```
 const WSServer = require('chat-server');
 new WSServer.wsserver(8000);
@@ -65,7 +65,7 @@ Per l'invio di un nuovo messaggio il client dovrà inviare al server il seguente
 
 ### Eventi
 
-Gli eventi di sistema verranno inviati a tutti i clint connessi tramite invio di messaggi
+Gli eventi di sistema verranno inviati a tutti i client connessi tramite invio di messaggi
 
 * connessione di un nuovo utente
 ```
@@ -89,7 +89,7 @@ Gli eventi di sistema verranno inviati a tutti i clint connessi tramite invio di
 }
 ```
 
-* ricezione di un nuovo mesaggio
+* ricezione di un nuovo messaggio
 ```
 {
     "type": "MSG",          comando di messaggio
@@ -102,6 +102,6 @@ Gli eventi di sistema verranno inviati a tutti i clint connessi tramite invio di
 
 #### Note
 
-Se in fase di autenticazione viene passato il nome di una stanza non esistente il server procederà a crearla e a renderla disponibile a tutti i client a conoscenza del nome.
+Se in fase di autenticazione viene passato il nome di una stanza non esistente il server procederà a crearla e a permetterne l'utilizzo.
 
 E' possibile impostare una porta diversa su cui mettersi in ascolto passando il valore come parametro.

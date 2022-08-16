@@ -4,8 +4,8 @@ import WSMessage from "./wsmessage";
 
 import WebSocket, { WebSocketServer } from 'ws';
 
+// Estensione typescript per WebSocket.WebSocket
 interface ExtWebSocket extends WebSocket.WebSocket { uid: string, authorized: boolean, room: string, user: WSUser };
-
 
 export default class WSServer {
     private wss: WebSocketServer;
@@ -14,9 +14,12 @@ export default class WSServer {
     constructor(port: number) {
         this.wss = this.initialize_ws(port);
         this.rooms = [];
-        console.error("Server is running - waiting for connection");
+        console.debug("Server is running - waiting for connection");
     }
     
+    /*
+        Genera una stringa random come identificativo di connessione di un client
+    */
     private generate_unique_identifier(): string {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -29,16 +32,19 @@ export default class WSServer {
         _wss.on("connection", (con: ExtWebSocket) => {
             con.uid = this.generate_unique_identifier();
             con.authorized = false;
+            // callback per i messaggi ricevuti dai client
             con.on("message", (data: any) => {
                 let message: any = {};
                 try {
                     message = JSON.parse(data);
                 }catch(e) { console.error(e); return; }
                 if (message.command) {
+                    // autenticazione di un nuovo clint
                     if (message.command === 'HELO') {
                         if (!message.username || !message.room) return;
                         console.debug(`Client ${message.username} has sent: ${data}`)
                         let current_room = this.rooms.filter((r) => { return r.get_name() === message.room });
+                        // in caso di stanza non esistente se ne crea una nuova
                         if (!current_room.length) {
                             const _temp = new WSRoom(message.room);
                             this.rooms.push(_temp);
@@ -50,9 +56,11 @@ export default class WSServer {
                         con.authorized = true;
                         console.debug(`Client ${con.user.name} authorized`);
                         
+                        // invio elenco dei partecipanti al client appena connesso e gli ultimi messaggi
                         this.send_partecipants_to_client(con);
                         this.send_lastmessages_to_client(con);
-                        
+
+                        // invio comunicazione ai client della connessione di un nuovo utente
                         this.send_message_to_all(con.room, {
                             type: "CONNECTION",
                             message: `${message.username} connected`,
@@ -68,9 +76,11 @@ export default class WSServer {
                             created_at: new Date()
                         }, true);
                     } else {
+                        // si scartano tutti i messaggi ricevuti da client non autenticati
                         if (!con.authorized) return;
                         console.debug(`Client ${con.user.name} has sent: ${data}`)
                         if (message.command === 'MSG' && message.message) {
+                            // in caso di nuovo messaggio lo si inoltra a tutti i clienti connessi
                             this.send_message_to_all(con.room, {
                                 type: "MSG",
                                 message: message.message,
@@ -83,9 +93,11 @@ export default class WSServer {
                 }
             });
             
+            // callback per la disconnessione di un client
             con.on("close", () => {
                 if (!con.user) return;
                 console.debug(`Clients ${con.user.name} disconnected`)
+                // si notifica a tutti i client ancora connessi l'avvenuta disconnessione
                 this.send_message_to_all(con.room, {
                     type: "DISCONNECTION",
                     message: `${con.user.name} disconnected`,
@@ -102,14 +114,21 @@ export default class WSServer {
                 }, true);
             });
             
+            // callback in caso di errore
             con.onerror = function () {
-                console.error("Some Error occurred")
+                console.error("Some error occurred");
             }
             
         });
         return _wss;
     }
     
+    /*
+        invio di un messaggio a tutti i client connessi ad una stanza
+        - room: nome della stanza
+        - message: testo del messaggio
+        - store: se salvare il messaggio stesso nella history della chat 
+    */
     private send_message_to_all(room: string, message: WSMessage, store: boolean):void {
         const current_room = this.rooms.filter((r) => { return r.get_name() === room });
         if (!current_room.length) return;
@@ -123,6 +142,9 @@ export default class WSServer {
         });
     }
     
+    /*
+        invio degli ultimi 20 messaggi ad un singolo client
+    */
     private send_lastmessages_to_client(client: ExtWebSocket) {
         const current_room = this.rooms.filter((r) => { return r.get_name() === client.room });
         if (!current_room.length) return;
@@ -135,6 +157,9 @@ export default class WSServer {
         }
     }
 
+    /*
+        invio degli utenti connessi alla stessa stanza del client
+    */
     private send_partecipants_to_client(client: ExtWebSocket) {
         const current_clients: WSUser[] = [];
         this.wss.clients.forEach((c: any) => {

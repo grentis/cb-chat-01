@@ -1,4 +1,3 @@
-import WSUser from "./wsuser";
 import WSMessage from "./wsmessage";
 
 export default class WSRoom {

@@ -23,13 +23,9 @@ class ChatSystem extends React.Component<ChatSystemProps, ChatSystemState> {
     };
   }
 
-  componentDidMount() { 
-    
-  }
+  componentDidMount() { }
 
-  componentWillUnmount(){
-    
-  }
+  componentWillUnmount(){ }
 
   handle_change_username(event: any) {
     this.setState({username: event.target.value});
@@ -59,11 +55,11 @@ class ChatSystem extends React.Component<ChatSystemProps, ChatSystemState> {
         { !this.state.logged && (
           <UiLogin panel_title="Login" submit_event={(ev:any) => this.handle_submit(ev)}>
             <UiInput label="Username" name="username" value={this.state.username}
-                  field_id="username" placeholder="Username"
-                  change_event={(ev:any) => this.handle_change_username(ev)}></UiInput>
+              field_id="username" placeholder="Username"
+              change_event={(ev:any) => this.handle_change_username(ev)}></UiInput>
             <UiInput label="Room" name="room_name" value={this.state.room_name}
-                  field_id="room_name" placeholder="Room name"
-                  change_event={(ev:any) => this.handle_change_room_name(ev)}></UiInput>
+              field_id="room_name" placeholder="Room name"
+              change_event={(ev:any) => this.handle_change_room_name(ev)}></UiInput>
             <UiButton name="login" click_callback={(ev:any) => this.handle_submit(ev)}>Login</UiButton>
           </UiLogin>
         ) }

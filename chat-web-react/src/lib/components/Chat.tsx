@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { UiRow, UiPanel, UiInput, UiLoading, UiButton } from 'ui-components-react';
 import MessageList from './MessageList';
 import UserList, { WSUser, WSMessage } from './UserList';
@@ -51,45 +51,55 @@ class Chat extends React.Component<ChatProps, ChatState> {
     clearTimeout(this.retry_timeout);
     this.setState({connected: false});
     const wsc = new WebSocket(this.props.server);
+    // per ogni messaggio ricevuto
     wsc.onmessage = (data) => {
       console.debug(data.data);
       const message = JSON.parse(data.data);
+
       if (message.type === 'USERS') {
+        // contiene l'elenco degli utenti connessi alla stanza
         this.setState({
           users: message.users,
           uid: message.uid
         });
       } else if(message.type === 'CONNECTION') {
+        // nuovo utente collegato
         const current_users = this.state.users;
         if (!current_users.filter((u) => {return u.id === message.author_uid}).length) {
+          // se non già presente lo aggiungo alla lista degli utenti
           current_users.push({id: message.author_uid, name: message.author_name});
           this.setState({
             users: current_users
           });
         }
       } else if(message.type === 'DISCONNECTION') {
+        // utente scollegato
         let current_users = this.state.users;
         current_users = current_users.filter((u) => {return u.id !== message.author_uid});
         this.setState({
             users: current_users
         });
       } else if(message.type === 'MSG') {
-        console.debug("new message from " + message.author_uid);
+        // messaggio ricevuto
         let current_messages = this.state.messages;
         current_messages.unshift(message);
         this.setState({
-            messages: current_messages
+          messages: current_messages
         });
         console.debug(this.state.messages);
       }
-
     }
+
+    // all'apertura della connessione
     wsc.onopen = () => {
       this.setState({connected: true, messages: [], users: []});
       wsc.send(JSON.stringify({command: "HELO", room: `${this.props.room_name.toLowerCase()}`, username: `${this.props.username}`}));  
     }
+
+    // alla chiusura della connessione
     wsc.onclose = () => {
       this.setState({connected: false});
+      // tento di ricollegarmi dopo 3sec
       this.retry_timeout = window.setTimeout(() => {
         if (this.wsc)
           this.wsc = this.create_websocket();
@@ -98,16 +108,19 @@ class Chat extends React.Component<ChatProps, ChatState> {
     return wsc;
   }
 
+  // invio di un nuovo messaggio
   send_message(event:any): void {
     this.wsc?.send(JSON.stringify({"command": "MSG", "message": this.state.new_message}))
     this.setState({new_message: ''});
     event.preventDefault();
   }
 
-  handleChange(event: any) {
+  // onchange del messaggio
+  handle_change_message(event: any) {
     this.setState({new_message: event.target.value});
   }
 
+  // onclick sul bottone di uscita dalla stanza
   handle_exit(event:any) {
     event.preventDefault();
     this.props.exit_callback.apply(null, [event]);
@@ -129,7 +142,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
           <form onSubmit={this.send_message}>
             <UiInput name="new_chat_message" value={this.state.new_message}
               field_id="new_chat_message" placeholder="Write here your message"
-              change_event={(ev:any) => this.handleChange(ev)}></UiInput>
+              change_event={(ev:any) => this.handle_change_message(ev)}></UiInput>
           </form>
           <MessageList uid={this.state.uid} messages={this.state.messages}></MessageList>
         </UiPanel>

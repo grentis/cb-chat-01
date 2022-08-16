@@ -12,13 +12,13 @@ class MessageList extends React.Component<MessageListPros> {
 
   render(){
     return (
-        <UiMessagelist>
-        { 
-            this.props.messages.map((msg) => {
-                return <UiMessageitem highlight={msg.author_uid === this.props.uid} key={msg.author_uid + '_' + msg.created_at} date={msg.created_at} user_name={msg.author_name} message={msg.message}></UiMessageitem>;
-            })
-        }
-        </UiMessagelist>
+      <UiMessagelist>
+      { 
+        this.props.messages.map((msg) => {
+          return <UiMessageitem highlight={msg.author_uid === this.props.uid} key={msg.author_uid + '_' + msg.created_at} date={msg.created_at} user_name={msg.author_name} message={msg.message}></UiMessageitem>;
+        })
+      }
+      </UiMessagelist>
     );
   }
 }

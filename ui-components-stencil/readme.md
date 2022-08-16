@@ -1,6 +1,6 @@
 # cb-chat-01/ui-components-stencil
 
-Progetto di componenti UI utillando Stencil.
+Progetto Stencil di componenti UI.
 
 ### Installazione
 

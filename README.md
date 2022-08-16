@@ -8,7 +8,7 @@ Gestione di una web chat. Il progetto è composto da 6 parti
 - #### [chat-server-test](chat-server-test/README.md)
   Applicazione di esempio che mostra come usare il modulo chat-server
 s
-- #### [ui-components-stencil](ui-components-stencil/README.md)
+- #### [ui-components-stencil](ui-components-stencil/readme.md)
   Modulo stencil che contiene i componenti di UI necessari all'applicativo web
 
 - #### [ui-components-react](ui-components-react/README.md)
@@ -20,3 +20,8 @@ s
 - #### packages  
   I moduli non sono stati pubblicati su npm e, per gestire le dipendenze tra i progetti, si sono creati i diversi package.  
 Soluzione ovviamente non ottimale ma usata solo a fini di esercitazione
+
+## Note di sviluppo
+  Per la gestione del "multi-pagina" (login e stanza) non è stato utilizzato il modulo routing di React per permettere l'esportazione del componente come modulo indipendente. La gestione del cambio pagina è stata quindi sviluppata basandosi semplicemente sul submit della form di login.
+  
+  La gestione degli utenti, delle stanze e dei messaggio è gestita in memoria dal server di chat.

@@ -9,11 +9,11 @@ export class UiRow {
   
   render() {
     return (
-        <Host style={{flex: "1"}}>
-          <div class="flex flex-wrap relative">
-              <slot />
-          </div>
-        </Host>
+      <Host style={{flex: "1"}}>
+        <div class="flex flex-wrap relative">
+          <slot />
+        </div>
+      </Host>
     );
   }
 }
