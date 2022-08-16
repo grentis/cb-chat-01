@@ -1,3 +1,3 @@
-import WSServer from './wsserver'
+import WSServer from './wsserver';
 
-export { WSServer as wsserver};
+export { WSServer as wsserver };

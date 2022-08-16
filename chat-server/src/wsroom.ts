@@ -1,15 +1,15 @@
-import WSMessage from "./wsmessage";
+import WSMessage from './wsmessage';
 
 export default class WSRoom {
-    private name: string;
-    public messages: WSMessage[];
-    
-    constructor(name: string) {
-        this.name = name;
-        this.messages = [];
-    }
+  private readonly name: string;
+  public messages: WSMessage[];
 
-    public get_name(){
-        return this.name.toLowerCase();
-    }
+  constructor (name: string) {
+    this.name = name;
+    this.messages = [];
+  }
+
+  public get_name (): string {
+    return this.name.toLowerCase();
+  }
 }
