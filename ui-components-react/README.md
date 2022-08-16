@@ -1,16 +1,28 @@
-# stencil-ds-react-template
+# cb-chat-01/ui-components-react
 
-This is an example repo of building plugins.
+Wrapper tra i componenti di ui stencil e il mondo react.  
 
-## Step 1.
+### Installazione
 
-- Update the `package.json` to have the correct package name for this repo.
-- Replace `component-library` under `dependencies` with your core stencil package name.
+1. installare il modulo tramite npm  
+```
+npm install ../packages/ui-components-react-0.0.1.tgz
+```
 
-## Step 2.
+2. importare nel proprio progetto react il componente desiderato
+```
+import { UiRow, UiPanel, UiInput, UiLoading, UiButton } from 'ui-components-react';
+```
 
-- Build your core stencil package.
+2. inserire il componente in JSX
+```
+render(){
+    return (
+      <UiLoading></UiLoading>
+    )
+}
+```
 
-## Step 3.
+#### Note
 
-- Run build on this package.
+Questo modulo viene autogenerato dal componente ui-components-stencil

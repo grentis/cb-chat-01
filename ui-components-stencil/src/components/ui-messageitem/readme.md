@@ -1,6 +1,6 @@
 # ui-useritem
 
-
+Render a single chat message
 
 <!-- Auto Generated Below -->
 

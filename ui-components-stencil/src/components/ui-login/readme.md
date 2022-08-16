@@ -1,16 +1,16 @@
 # ui-panel
 
-
+Rendering a login panel
 
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property       | Attribute     | Description | Type       | Default     |
-| -------------- | ------------- | ----------- | ---------- | ----------- |
-| `panel_title`  | `panel_title` |             | `string`   | `undefined` |
-| `submit_event` | --            |             | `Function` | `undefined` |
+| Property       | Attribute     | Description | Type       | Default     | Used for |
+| -------------- | ------------- | ----------- | ---------- | ----------- | ----------- |
+| `panel_title`  | `panel_title` |             | `string`   | `undefined` | |
+| `submit_event` | --            |             | `Function` | `undefined` | `callback on form submit` |
 
 
 ----------------------------------------------

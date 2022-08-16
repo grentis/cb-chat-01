@@ -1,6 +1,6 @@
 # ui-panel
 
-
+Rendering a loading panel
 
 <!-- Auto Generated Below -->
 
