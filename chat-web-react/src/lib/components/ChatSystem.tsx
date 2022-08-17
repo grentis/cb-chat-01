@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { UiLogin, UiInput, UiButton, UiRow } from 'ui-components-react';
 import Chat from './Chat';
 
