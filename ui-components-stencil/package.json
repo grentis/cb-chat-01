@@ -4,7 +4,7 @@
   "author": {
     "name": "Stefano Motta"
   },
-  "description": "UI Components",
+  "description": "Stencil UI Components",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",

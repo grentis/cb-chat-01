@@ -1,7 +1,11 @@
 {
   "name": "chat-server",
   "version": "1.0.0",
-  "description": "",
+  "author": {
+    "name": "Stefano Motta"
+  },
+  "private": true,
+  "description": "Node.js module for a web chat server",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "files": [
@@ -13,7 +17,6 @@
     "lint": "eslint ./src --ext .ts"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.9",
