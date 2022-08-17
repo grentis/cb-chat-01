@@ -5,7 +5,7 @@ import { ChatSystem } from './lib';
 function App() {
   return (
     <div className="App">
-      <ChatSystem server='ws://192.168.1.11:8000'></ChatSystem>
+      <ChatSystem server='ws://127.0.0.1:8000'></ChatSystem>
     </div>
   );
 }
